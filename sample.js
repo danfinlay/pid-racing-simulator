@@ -1,35 +1,42 @@
+var DrivingSim = require('./')
+
 /*
  * PID AUTO DRIVING SIMULATOR!!!!
  *
- * Welcome to the world's most realistic auto-driving sim.
+ * Welcome to the world's most "realistic" auto-driving simulator!
  *
  * In this game, you are a programmer for a self driving car
- * that will be driving critically bleeding patients to the hospital.
- * The further off the line you are, the harsher the terrain,
- * and the faster your patient bleeds out.
+ * that will be driving a critically bleeding patient to the hospital!
+ *
+ * The further from the road you veer, the harsher the terrain,
+ * and the faster your patient bleeds out!
  *
  * Try to get to the finish line with as much blood in your patient
  * as possible!
+ *
+ * You can try racing as many cars as you want!
+ * Below you can see four different cars.
+ *
+ * See if you can make one that can beat all the other cars!
+ *
+ * Here is how you tell the car how to turn!
+ * The car has an x and y attribute you can check,
+ * as well as a rotation property.
+ * You want to be as close to the roadY as you can!
+ *
+ * Return a number of degrees to turn (added to your current turn)
+ * The car has a limit of how hard it can turn!
+ *
+ * Here's a very dumb driving function to get started:
  */
-
-// Here is how you tell the car how to turn!
-// The car has an x and y attribute you can check,
-// as well as a rotation property.
-// You want to be as close to the roadY as you can!
-//
-// Return a number of degrees to turn (added to your current turn)
-// The car has a limit of how hard it can turn!
-//
-// Here's a very dumb driving function to get started:
-var DrivingSim = require('./')
 
 var cars = [
   {
     decideTurnAngle: function(car) {
       if (opts.roadY > car.y) {
-        return 0.5
+        return 2
       } else {
-        return -0.5
+        return -2
       }
     },
     name: 'Bang Bang',
@@ -37,9 +44,9 @@ var cars = [
   },
   {
     decideTurnAngle: function(car) {
-      return (opts.roadY - car.y) / 20
+      return (opts.roadY - car.y) / 40
     },
-    name: 'Proportional',
+    name: 'Propeller Man',
     color: '#00FF00',
   },
   {
@@ -49,7 +56,7 @@ var cars = [
 
       return p + d
     },
-    name: 'Proportional Derivative',
+    name: 'Peety Dandruff',
     color: '#FF0000',
   }
 ]
@@ -61,10 +68,10 @@ var opts = {
   width: 800,       // distance to hospital (px)
   startingOffset: 30, // How far from the road you start
   carSpeed: 2,        // How many pixels you move per frame
-  roadY: 300,
+  roadY: 290,
   hardestTurn: 45,
-  bloodLossPerFrame: 0.015,
-  bloodLossPerPixelAwayPerFrame: 0.002,
+  bloodLossPerFrame: 0.007,
+  bloodLossPerPixelAwayPerFrame: 0.001,
 }
 
 var element = document.querySelector('body')
@@ -81,6 +88,4 @@ retryButton.addEventListener('click', function(event) {
 element.appendChild(retryButton)
 
 drivingSim.startDrive(opts, cars)
-
-
 
