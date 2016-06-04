@@ -14,12 +14,12 @@
 
 // Here is how you tell the car how to turn!
 // The car has an x and y attribute you can check.
-// You want to be as close to the lineHeight as you can!
+// You want to be as close to the roadY as you can!
 //
 // Return a number of degrees to turn.
 // The car has a limit of how hard it can turn!
 function decideTurnAngle(car) {
-  if (car.y < lineHeight) {
+  if (car.y < roadY) {
     return 1
   } else {
     return -1
@@ -31,7 +31,7 @@ var height = 600
 var width = 800
 var startingOffset = 30
 var carSpeed = 2
-var lineHeight = height / 2
+var roadY = height / 2
 var totalBlood = 3000
 var hardestTurn = 45
 
@@ -98,7 +98,7 @@ function run() {
 }
 
 function updateScore(car) {
-  var distanceFromLine = Math.abs(car.y - lineHeight)
+  var distanceFromLine = Math.abs(car.y - roadY)
   lifeRemaining -= distanceFromLine
   lifeEl.innerText = 'Blood remaining: ' + lifeRemaining
 
