@@ -41,7 +41,7 @@ DrivingSim.prototype.startDrive = function(opts, carsOpts) {
 
   var lifeRemaining = opts.totalBlood
 
-  this.centerLine = this.paper.rect(0, opts.height / 2, opts.width, 2)
+  this.centerLine = this.paper.rect(0, opts.roadY, opts.width, 2)
   var startTime = Date.now()
 
   this.run = function() {
