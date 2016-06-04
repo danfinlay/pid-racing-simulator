@@ -42,9 +42,15 @@ function Car(opts) {
     this.getX()
     this.getY()
     this.getRotation()
+    this.drawDot()
+  }
+
+  this.drawDot = function() {
+    this.paper.circle(this.x, this.y, 1).attr('fill', this.color).attr('stroke', 'none')
   }
 
   this.reset = function(opts, paper) {
+    this.paper = paper
     this.blood = opts.totalBlood
     this.x = 0
     this.y = (opts.height / 2) + opts.startingOffset

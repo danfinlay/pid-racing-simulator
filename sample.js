@@ -27,9 +27,9 @@ var cars = [
   {
     decideTurnAngle: function(car) {
       if (opts.roadY > car.y) {
-        return 1
+        return 0.5
       } else {
-        return - 1
+        return -0.5
       }
     },
     name: 'Bang Bang',
@@ -37,7 +37,7 @@ var cars = [
   },
   {
     decideTurnAngle: function(car) {
-      return (opts.roadY - car.y) / 10
+      return (opts.roadY - car.y) / 20
     },
     name: 'Proportional',
     color: '#00FF00',
@@ -49,7 +49,7 @@ var cars = [
 
       return p + d
     },
-    name: 'PD',
+    name: 'Proportional Derivative',
     color: '#FF0000',
   }
 ]
