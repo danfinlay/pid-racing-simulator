@@ -23,16 +23,36 @@
 // Here's a very dumb driving function to get started:
 var DrivingSim = require('./')
 
-var pd = {
-  decideTurnAngle: function(car) {
-    var p = (opts.roadY - car.y) / 4
-    var d = (car.rotation * -1) / 7
-
-    return p + d
+var cars = [
+  {
+    decideTurnAngle: function(car) {
+      if (opts.roadY > car.y) {
+        return 1
+      } else {
+        return - 1
+      }
+    },
+    name: 'Bang Bang',
+    color: '#0000FF',
   },
-  name: 'PD',
-  color: '#FF0000',
-}
+  {
+    decideTurnAngle: function(car) {
+      return (opts.roadY - car.y) / 10
+    },
+    name: 'Proportional',
+    color: '#00FF00',
+  },
+  {
+    decideTurnAngle: function(car) {
+      var p = (opts.roadY - car.y) / 4
+      var d = (car.rotation * -1) / 7
+
+      return p + d
+    },
+    name: 'PD',
+    color: '#FF0000',
+  }
+]
 
 // Parameters: Tune your difficulty here!
 var opts = {
@@ -56,11 +76,11 @@ retryButton.innerText = 'Start Over'
 retryButton.addEventListener('click', function(event) {
   console.log("clicked")
   event.preventDefault()
-  drivingSim.startDrive(opts, [pd])
+  drivingSim.startDrive(opts, cars)
 })
 element.appendChild(retryButton)
 
-drivingSim.startDrive(opts, [pd])
+drivingSim.startDrive(opts, cars)
 
 
 

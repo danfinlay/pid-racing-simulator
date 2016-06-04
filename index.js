@@ -78,7 +78,9 @@ DrivingSim.prototype.startDrive = function(opts, carsOpts) {
 
   this.updateScore = function() {
     var _this = this
-    this.cars.forEach(function(car) {
+    this.cars.filter(function(car) {
+      return !car.isDone(_this.opts.width)
+    }).forEach(function(car) {
       var distanceFromLine = Math.abs(car.y - opts.roadY)
       car.blood -= distanceFromLine * opts.bloodLossPerPixelAwayPerFrame
       car.blood -= opts.bloodLossPerFrame
