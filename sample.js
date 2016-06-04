@@ -21,109 +21,42 @@
 // The car has a limit of how hard it can turn!
 //
 // Here's a very dumb driving function to get started:
+var DrivingSim = require('./')
 function decideTurnAngle(car) {
 
-  var p = (roadY - car.y) / 2
+  var p = (opts.roadY - car.y) / 2
   var d = (car.rotation * -1) / 30
-  
+
   return p + d
 }
 
 // Parameters: Tune your difficulty here!
-var totalBlood = 9.48 // pints of blood in a 150lb human
-var height = 600      // play area height (px)
-var width = 800       // distance to hospital (px)
-var startingOffset = 30 // How far from the road you start
-var carSpeed = 2        // How many pixels you move per frame
-var roadY = height / 2  
-var hardestTurn = 45
-var bloodLossPerFrame = 0.3
-var bloodLossPerPixelAwayPerFrame = 0.1
-
-//////////////////////////////////
-// PRIVATE INTERNAL LOGIC ZONE////
-/////// DO NOT ENTER!!!!!!!///////
-//////////////////////////////////
-var Raphael = require('raphael')
-var body = document.querySelector('body')
-var lifeEl = document.createElement('p')
-var distanceEl = document.createElement('p')
-body.appendChild(lifeEl)
-body.appendChild(distanceEl)
-
-var lifeRemaining = totalBlood
-var paper = Raphael(0, 0, width, height)
-
-var centerLine = paper.rect(0, height / 2, width, 2)
-
-var car = {
-  x: 0,
-  y: (height / 2) + startingOffset,
-  getX: function() {
-    this.x = this.shape.getBBox().x
-    return this.x
-  },
-  getY: function() {
-    this.y = this.shape.getBBox().y
-    return this.y
-  },
-  getRotation: function() {
-    // sample rotation string:
-    // "t-38.137297509093735,4.911377624547314r-10,0,0"
-    var rotation
-    try {
-      rotation = this.shape.transform().match(/(?:r).[0-9]+/)[0].substr(1)
-    } catch (e) {
-      rotation = 0
-    }
-    this.rotation = parseInt(rotation)
-  },
-  update: function() {
-    this.getX()
-    this.getY()
-    this.getRotation()
-  },
-}
-car.shape = paper.rect(car.x, car.y, 20, 10)
-car.shape.attr('fill', '#FF0000')
-
-var startTime = Date.now()
-window.requestAnimationFrame(run)
-function run() {
-
-  car.update()
-  updateScore(car)
-  var turnAngle = decideTurnAngle(car)
-  if (turnAngle > hardestTurn) {
-    turnAngle = hardestTurn
-  } else if (turnAngle < (-1 * hardestTurn)) {
-    turnAngle = (-1 * hardestTurn)
-  }
-
-  car.shape.rotate(turnAngle)
-  car.shape.translate(carSpeed)
-
-  var x = car.getX()
-  var y = car.getY()
-  if (x < -10 || y < -10 || x > width || y > height || lifeRemaining <= 0) {
-    // Game over
-    var endTime = Date.now()
-    var totalTime = endTime - startTime
-    var timeEl = document.createElement('p')
-    timeEl.innerText = 'Total time was ' + (totalTime / 1000).toFixed(2) + ' seconds'
-		body.appendChild(timeEl)
-  } else {
-   	window.requestAnimationFrame(run)
-  }
-
+var opts = {
+  totalBlood: 9.48, // pints of blood in a 150lb human
+  height: 600,      // play area height (px)
+  width: 800,       // distance to hospital (px)
+  startingOffset: 30, // How far from the road you start
+  carSpeed: 2,        // How many pixels you move per frame
+  roadY: 300,
+  hardestTurn: 45,
+  bloodLossPerFrame: 0.015,
+  bloodLossPerPixelAwayPerFrame: 0.002,
 }
 
-function updateScore(car) {
-  var distanceFromLine = Math.abs(car.y - roadY)
-  lifeRemaining -= distanceFromLine * bloodLossPerPixelAwayPerFrame
-  lifeRemaining -= bloodLossPerFrame
-  lifeEl.innerText = 'Blood remaining: ' + (lifeRemaining / 100).toFixed(2)
+var element = document.querySelector('body')
+var drivingSim = new DrivingSim(element)
 
-  var distanceFromEnd = width - car.x
-  distanceEl.innerText = 'Distance from hospital: ' + distanceFromEnd.toFixed(2)
-}
+// Retry button
+var retryButton = document.createElement('button')
+retryButton.innerText = 'Start Over'
+retryButton.addEventListener('click', function(event) {
+  console.log('clicked')
+  event.preventDefault()
+  drivingSim.startDrive(opts, decideTurnAngle)
+})
+element.appendChild(retryButton)
+
+drivingSim.startDrive(opts, decideTurnAngle)
+
+
+
