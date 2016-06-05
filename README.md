@@ -1,6 +1,5 @@
 # Pid Auto Driving Simluator
-
-[Live example here](http://requirebin.com/?gist=d1ca0f0eaeaf264e6b9b94be12d8013e)
+### [Live example here](http://requirebin.com/?gist=d1ca0f0eaeaf264e6b9b94be12d8013e)
 
 ```
  * Welcome to the world's most realistic auto-driving sim.
@@ -14,3 +13,10 @@
  * as possible!
  */
 ```
+
+## Running Locally
+To run locally, install beefy (`npm i -g beefy`) and then run our `sample.js` file like this:
+```bash
+beefy sample.js --live
+```
+
