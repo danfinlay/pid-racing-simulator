@@ -50,7 +50,9 @@ DrivingSim.prototype.startDrive = function(opts, carsOpts) {
       if (!car.isDone(_this.opts.width)) {
         car.update()
 
-        var turnAngle = car.decider(car)
+        var opts = _this.opts
+        var readOpts = JSON.parse(JSON.stringify(opts))
+        var turnAngle = car.decider(car, readOpts)
         if (turnAngle > opts.hardestTurn) {
           turnAngle = opts.hardestTurn
         } else if (turnAngle < (-1 * opts.hardestTurn)) {

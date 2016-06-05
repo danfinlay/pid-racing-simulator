@@ -32,7 +32,7 @@ var DrivingSim = require('./')
 
 var cars = [
   {
-    decideTurnAngle: function(car) {
+    decideTurnAngle: function(car, opts) {
       if (opts.roadY > car.y) {
         return 2
       } else {
@@ -43,14 +43,14 @@ var cars = [
     color: '#0000FF',
   },
   {
-    decideTurnAngle: function(car) {
+    decideTurnAngle: function(car, opts) {
       return (opts.roadY - car.y) / 40
     },
     name: 'Propeller Man',
     color: '#00FF00',
   },
   {
-    decideTurnAngle: function(car) {
+    decideTurnAngle: function(car, opts) {
       var p = (opts.roadY - car.y) / 4
       var d = (car.rotation * -1) / 7
 
