@@ -30,6 +30,14 @@ var DrivingSim = require('./')
  * Here's a very dumb driving function to get started:
  */
 
+var yourCar = { name: 'Your Car', color: 'black' }
+
+yourCar.decideTurnAngle = function(car, options) {
+  // Car is the car object.  Try car.x, car.y, or car.rotation
+  // Options is the original race options, including options.roadY
+  return (Math.random() - 0.5) * 45
+}
+
 var cars = [
   {
     decideTurnAngle: function(car, opts) {
